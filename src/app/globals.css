@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Tipografía VT323 como base monoespaciada */
+  --font-sans: var(--font-vt323);
+  --font-mono: var(--font-vt323);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Colores estrictos de teletexto */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-white: #ffffff;
+  --color-red-500: #ff0000;
+  --color-green-500: #00ff00;
+  --color-yellow-500: #ffff00;
+  --color-blue-500: #0000ff;
+  --color-cyan-500: #00ffff;
+  --color-magenta-500: #ff00ff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-vt323), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-size: 20px;
+  line-height: 1.3;
 }
+
+/* Tipografía tipo teletexto para bloques de texto */
+.teletext-text {
+  font-family: "VT323", monospace;
+  letter-spacing: 2px;
+  -webkit-font-smoothing: none;
+  image-rendering: pixelated;
+}
+
+/* --- Efecto CRT global --- */
+
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.crt-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  pointer-events: none;
+}
+
+.crt-flicker {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.02);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: crt-flicker 0.08s infinite alternate;
+}
+
+@keyframes crt-flicker {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 0.35;
+  }
+}
+
